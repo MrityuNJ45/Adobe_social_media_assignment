@@ -1,5 +1,7 @@
 package com.adobe.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +57,13 @@ public class PostController {
 		Post p = pServ.deletePostById(id);
 		return new ResponseEntity<Post>(p, HttpStatus.OK);
 
+	}
+	
+	@GetMapping("/analytics/posts")
+	public ResponseEntity<List<Post>> getAllPost() throws PostException{
+		
+		List<Post> list = pServ.getAllPosts();
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

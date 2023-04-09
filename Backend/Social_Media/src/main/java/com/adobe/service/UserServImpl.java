@@ -57,6 +57,7 @@ public class UserServImpl implements UserServ {
 		}
 		User u = opt.get();
 		u.setBio(userPostDto.getBio());
+		u.setEmail(userPostDto.getEmail());
 		u.setName(userPostDto.getName());
 		u.setUpdated_at(LocalDateTime.now());
 		return userDao.save(u);
