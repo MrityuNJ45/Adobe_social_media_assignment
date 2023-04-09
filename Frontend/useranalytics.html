@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* Grid container styles */
+        .user-grid {
+            margin: auto;
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Card container styles */
+        .user-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            /* width: 100%;
+            height: 100%; */
+        }
+
+        .user-card h3 {
+            margin-top: 0;
+        }
+
+        .user-card p {
+            margin-bottom: 0;
+        }
+        #home{
+            margin: auto;
+            width: 300px;
+            border: 1px solid red;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="home" onclick="location.href='index.html'"><h1>Home</h1></div>
+    <h1 style="text-align: center;">Top 5 active users....</h1>
+    <div id="user-container"></div>
+
+
+
+
+</body>
+
+</html>
+
+<script>
+
+
+async function hello() {
+
+let res = await fetch('https://adobesocialmediaassignment-production.up.railway.app/analytics/users/top-active');
+let users = await res.json();
+console.log(users);
+const userContainer = document.getElementById("user-container");
+const userGrid = document.createElement("div");
+userGrid.classList.add("user-grid");
+
+users.forEach(user => {
+    // Create a div element for the user card
+    const card = document.createElement("div");
+    card.classList.add("user-card");
+
+    // Add the user's name and age as a heading
+    const heading = document.createElement("h3");
+    heading.textContent = `${user.userId} (${user.name})`;
+    card.appendChild(heading);
+
+    // Add the user's occupation as a paragraph
+    const paragraph = document.createElement("p");
+    paragraph.textContent = user.bio;
+    card.appendChild(paragraph);
+
+
+    // Append the card to the user grid
+    userGrid.appendChild(card);
+});
+
+// Append the user grid to the user container
+userContainer.appendChild(userGrid);
+
+
+
+}
+
+hello();
+
+</script>
