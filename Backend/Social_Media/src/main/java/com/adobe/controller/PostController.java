@@ -2,6 +2,7 @@ package com.adobe.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,26 @@ public class PostController {
 		
 		List<Post> list = pServ.getAllPosts();
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/analytics/posts/top-liked")
+	public ResponseEntity<List<Post>> top5Posts() throws PostException{
+		
+		List<Post> list = pServ.getTop5LikePosts();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/posts/{id}/like")
+	public ResponseEntity<Post> likePost(@PathVariable("id") Integer id) throws PostException{
+		Post p = pServ.increaseLikeById(id);
+		return new ResponseEntity<>(p, HttpStatus.OK);
+	}
+	
+	@PostMapping("/posts/{id}/unlike")
+	public ResponseEntity<Post> unlikePost(@PathVariable("id") Integer id) throws PostException{
+		Post p = pServ.decreaseLikeById(id);
+		return new ResponseEntity<>(p, HttpStatus.OK);
 	}
 
 }
